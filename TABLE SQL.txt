@@ -1,0 +1,6 @@
+CREATE TABLE CHECKOUT (
+                    ID INT NOT NULL AUTO_INCREMENT,
+                    USER_ID VARCHAR(255) NOT NULL UNIQUE,
+                    TEHN_CHECK TEXT,
+					START_CHECK TEXT,
+                    PRIMARY KEY (ID))

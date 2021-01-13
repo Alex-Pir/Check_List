@@ -1,0 +1,93 @@
+
+.info-link
+{
+	display: flex;
+	flex-flow: row nowrap;
+	padding: 0 20px 0;
+	border-bottom: 1px solid #A9A9A9;
+	align-items: center;
+}
+.user-info
+{
+	margin-right: auto;
+	font-size: 18px;
+}
+.info-link .link a
+{
+	font-size: 18px;
+	text-decoration: none;
+	color: #A9A9A9;
+}
+.info-link .link span
+{
+    color: #A9A9A9;
+}
+.info-link .exit-link
+{
+    display: inline-block;
+    cursor: pointer;
+    font-size: 18px;
+    color: #A9A9A9;
+}
+.title-page
+{
+    text-align: center;
+}
+.title-page h1
+{
+    font-size: 18px;
+}
+ul.check-list
+{
+    display: flex;
+    flex-flow: column;
+}
+li.check-one
+{
+    display: flex;
+    flex-flow: column;
+    margin: 0 auto 5px;
+    width: 50%;
+}
+li.check-one .list-top,
+li.check-one .check-top
+{
+    display: flex;
+    flex-flow: row nowrap;
+    background-color: #DCDCDC;
+    padding: 10px;
+}
+li.check-one .check-top a
+{
+    text-decoration: none;
+    color: #7f7f7f;
+}
+li.check-one .check-top a:hover
+{
+    color: #000;
+}
+.check-one span
+{
+    margin-right: auto;
+}
+
+.show-more
+{
+    cursor: pointer;
+}
+
+.list-top,
+.check-bottom
+{
+    background-color: #fff;
+    padding: 10px;
+}
+.list-bottom
+{
+    display: none;
+}
+li.check-two
+{
+    display: block;
+    background-color: #fff;
+}

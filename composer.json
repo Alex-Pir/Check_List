@@ -1,0 +1,17 @@
+{
+  "name": "vendor_name/test-z",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "al",
+      "email": "email@example.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "classes\\": "classes/"
+    }
+  }
+}

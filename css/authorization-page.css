@@ -1,0 +1,46 @@
+.authorization-links
+{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    max-width: 650px;
+    margin: 5% auto;
+
+}
+.authorization-links h1
+{
+    text-align: center;
+}
+.authorization-links a
+{
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.authorization-links a img
+{
+    margin: 0 auto;
+	max-width: 300px;
+    max-height: 300px;
+    -webkit-transform: scale(1,1);
+    -webkit-transition-timing-function: ease-out;
+    -webkit-transition-duration: 550ms;
+    -moz-transform: scale(1,1);
+    -moz-transition-timing-function: ease-out;
+    -moz-transition-duration: 550ms;
+    transform: scale(1,1);
+    transition-timing-function: ease-out;
+    transition-duration: 550ms;
+}
+.authorization-links a img:hover
+{
+    -webkit-transform: scale(1.2,1.2);
+    -webkit-transition-timing-function: ease-out;
+    -webkit-transition-duration: 550ms;
+    -moz-transform: scale(1.2,1.2);
+    -moz-transition-timing-function: ease-out;
+    -moz-transition-duration: 550ms;
+    transform: scale(1.2,1.2);
+    transition-timing-function: ease-out;
+    transition-duration: 550ms;
+}
