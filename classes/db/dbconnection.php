@@ -4,6 +4,8 @@ namespace classes\db;
 use PDO;
 use PDOException;
 
+use classes\log\Log;
+
 class DBConnection
 {
     private $host;
@@ -28,7 +30,7 @@ class DBConnection
      * @param $input - строка, которую необходимо записать в базу
      * @return bool - true, если запись успешна, false - если нет.
      */
-    public function updateTehn($id, $input)
+    public function updateTehn(string $id, string $input): bool
     {
         try {
             $dbConnect = new PDO("mysql:host={$this->host};dbname={$this->db}", $this->user, $this->pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
@@ -40,7 +42,7 @@ class DBConnection
         }
         catch(PDOException $ex)
         {
-            echo 'Не удалось записать значения в базу';
+            Log::writeLog('Не удалось записать значения в базу');
             return false;
         }
     }
@@ -52,9 +54,8 @@ class DBConnection
      * @param $input - строка, которую необходимо записать в базу
      * @return bool - true, если запись успешна, false - если нет.
      */
-    public function updateStart($id, $input)
+    public function updateStart(string $id, string $input): bool
     {
-        file_put_contents($_SERVER['DOCUMENT_ROOT']."/citrus001.log", print_r(["UPDATE_START" => $id], true), FILE_APPEND);
         try {
             $dbConnect = new PDO("mysql:host={$this->host};dbname={$this->db}", $this->user, $this->pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
@@ -65,6 +66,7 @@ class DBConnection
         }
         catch (PDOException $ex)
         {
+            Log::writeLog('Не удалось записать значения в базу');
             return false;
         }
     }
@@ -76,9 +78,8 @@ class DBConnection
      * @param $input - строка, которую необходимо записать в базу
      * @return bool - true, если запись успешна, false - если нет.
      */
-    public function add($id)
+    public function add(string $id): bool
     {
-        file_put_contents($_SERVER['DOCUMENT_ROOT']."/citrus001.log", print_r(["ADD" => $id], true), FILE_APPEND);
         try {
             $dbConnect = new PDO("mysql:host={$this->host};dbname={$this->db}", $this->user, $this->pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
@@ -89,6 +90,7 @@ class DBConnection
         }
         catch (PDOException $ex)
         {
+            Log::writeLog('Не удалось добавить значения в базу');
             return false;
         }
     }
@@ -99,7 +101,7 @@ class DBConnection
      * @param $id - ID пользователя
      * @return bool - true, если данные существуют, false - если нет.
      */
-    public function getUserByUserId($id)
+    public function getUserByUserId(string $id): bool
     {
         try {
             $dbConnect = new PDO("mysql:host={$this->host};dbname={$this->db}", $this->user, $this->pass, [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'", PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
@@ -116,6 +118,7 @@ class DBConnection
         }
         catch (PDOException $ex)
         {
+            Log::writeLog('Не удалось получить данные о пользователе');
             return false;
         }
     }
@@ -124,9 +127,9 @@ class DBConnection
      * Получение состояния чекбоксов по ID пользователя
      *
      * @param $id - ID пользователя
-     * @return array - ассоциативный массив с данными
+     * @return array|int - ассоциативный массив с данными или -1 в случае неудачи
      */
-    public function getCheckboxByUserId($id)
+    public function getCheckboxByUserId(string $id)
     {
         try {
             $dbConnect = new PDO("mysql:host={$this->host};dbname={$this->db}", $this->user, $this->pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
@@ -134,17 +137,13 @@ class DBConnection
             $stmt = $dbConnect->prepare("SELECT * FROM CHECKOUT WHERE USER_ID = :userID");
             $stmt->execute(['userID' => $id]);
 
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            file_put_contents($_SERVER['DOCUMENT_ROOT']."/citrus001.log", print_r(['FETCH' => $result], true), FILE_APPEND);
-
-            return $result;
+            return $stmt->fetch(PDO::FETCH_ASSOC);
         }
         catch (PDOException $ex)
         {
+            Log::writeLog('Не удалось получить состояние чеклистов');
             return -1;
         }
 
     }
 }
-?>

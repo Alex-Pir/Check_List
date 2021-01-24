@@ -9,6 +9,7 @@ function autoload($aClassName) {
         'exceptions',
         'log'
     );
+
     foreach ($dir as $d)
     {
 
@@ -25,8 +26,6 @@ function autoload($aClassName) {
 
         if (file_exists($aClassFilePath))
         {
-            file_put_contents($_SERVER['DOCUMENT_ROOT']."/citrus001.log", print_r($aClassFilePath, true), FILE_APPEND);
-
             require_once $aClassFilePath;
             return true;
         }

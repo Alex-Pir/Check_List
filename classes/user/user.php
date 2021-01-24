@@ -43,7 +43,7 @@ class User
      * @return bool - true в случае успеха
      * @throws userException\UserUpdateException - если невозможно сохранить данные
      */
-    public function saveValuesTehnCheck()
+    public function saveValuesTehnCheck(): bool
     {
         $str = serialize($this->tehnCh);
         $result = $this->db->updateTehn($this->id, $str);
@@ -58,7 +58,7 @@ class User
      * @return bool - true в случае успеха
      * @throws userException\UserUpdateException - если невозможно сохранить данные
      */
-    public function saveValuesStartCheck()
+    public function saveValuesStartCheck(): bool
     {
         $str = serialize($this->startCh);
         $result = $this->db->updateStart($this->id, $str);
@@ -70,7 +70,7 @@ class User
     }
 
 
-    private function addValues()
+    private function addValues(): bool
     {
         $result = $this->db->add($this->id);
 
@@ -78,7 +78,7 @@ class User
     }
 
 
-    private function isUser()
+    private function isUser(): bool
     {
         return $this->db->getUserByUserId($this->id);
     }
@@ -87,7 +87,7 @@ class User
      * Получение состояния чекбоксов из базы
      * @return bool - true в случае успеха
      */
-    public function getValues()
+    public function getValues(): bool
     {
         $result = true;
         $response = $this->db->getCheckboxByUserId($this->id);
@@ -107,7 +107,7 @@ class User
      * Получение ID пользователя
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -116,7 +116,7 @@ class User
      * Получение имени пользователя
      * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -125,9 +125,8 @@ class User
      * Получение фамилии пользователя
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
 }
-?>
