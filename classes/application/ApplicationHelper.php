@@ -10,7 +10,20 @@ class ApplicationHelper {
         $this->reg = Registry::getInstance();
     }
 
-    private function setupOptions() {
+    public function init() {
+        $this->setupOptions();
+        $this->reg->setRequest(new HttpRequest());
+    }
 
+    private function setupOptions() {
+        $this->reg->setCommand($this->getConfig());
+    }
+
+    private function getConfig(): array {
+        return [
+            "\\classes\\commands\\MainCommands",
+            "\\classes\\commands\\StartCommands",
+            "\\classes\\commands\\TehnCommands"
+        ];
     }
 }
