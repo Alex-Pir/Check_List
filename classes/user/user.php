@@ -66,15 +66,13 @@ class User
         {
             throw new userException\UserUpdateException("Невозможно сохранить данные в базу");
         }
-        return $result;
+        return true;
     }
 
 
     private function addValues(): bool
     {
-        $result = $this->db->add($this->id);
-
-        return $result;
+        return $this->db->add($this->id);
     }
 
 
@@ -89,19 +87,17 @@ class User
      */
     public function getValues(): bool
     {
-        $result = true;
         $response = $this->db->getCheckboxByUserId($this->id);
         if ($response == -1)
         {
-            $result = false;
-        }
-        else
-        {
-            $this->tehnCh = unserialize($response[$this->TEHN_COLUMN]);
-            $this->startCh = unserialize($response[$this->START_COLUMN]);
+            return false;
         }
 
-        return $result;
+        $this->tehnCh = unserialize($response[$this->TEHN_COLUMN]);
+        $this->startCh = unserialize($response[$this->START_COLUMN]);
+
+
+        return true;
     }
     /**
      * Получение ID пользователя

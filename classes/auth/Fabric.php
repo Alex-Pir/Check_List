@@ -7,9 +7,8 @@ class Fabric
      * @param $provider
      * @return Mail|VK|null - экземпляр класса Authorization или null
      */
-    public static function getAutClass($provider)
+    public static function getAutClass($provider): ?Authorization
     {
-        $result = null;
         switch ($provider)
         {
             case 'vk':
@@ -17,6 +16,10 @@ class Fabric
                 break;
             case 'mail':
                 $result = new Mail();
+                break;
+            default:
+                $result = null;
+                break;
         }
         return $result;
     }

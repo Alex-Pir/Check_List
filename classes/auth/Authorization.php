@@ -1,6 +1,8 @@
 <?
 namespace classes\auth;
 
+use classes\exceptions\auth\AuthorizedException;
+
 abstract class Authorization
 {
     protected $userInfo;
@@ -42,6 +44,30 @@ abstract class Authorization
         exit();
     }
 
+    /**
+     * Возвращает информацию о пользователе
+     *
+     * @param $code
+     * @return mixed
+     * @throws AuthorizedException
+     */
+    protected function getUserInfo($code) {
+
+        if (!$code) {
+            throw new AuthorizedException('Не передан код в запросе');
+        }
+
+        $token = $this->getToken($code);
+
+        if (!isset($token['access_token'])) {
+            throw new AuthorizedException('Отсутствует токен');
+        }
+
+        return $this->getUserInformation($token);
+    }
+
     public abstract function isAuthorized();
+    protected abstract function getToken($code);
+    protected abstract function getUserInformation($token);
 }
 ?>

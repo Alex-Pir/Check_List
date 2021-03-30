@@ -1,5 +1,8 @@
 <?
 namespace classes\auth;
+use classes\exceptions\auth\AuthorizedException;
+use classes\log\Log;
+
 include  'config/VK/config.php';
 
 
@@ -17,44 +20,40 @@ class VK extends Authorization
      */
     public function isAuthorized()
     {
-        $result = false;
-        if (isset($_GET['code']))
-        {
-            $result = false;
+        try {
 
-            $token = $this->getToken();
+            $userInfo = $this->getUserInfo($_GET['code']);
 
-            if (isset($token['access_token']))
+            if (!isset($userInfo['id']))
             {
-                $userInfo = $this->getUserInformation($token);
-
-                if (isset($userInfo['id']))
-                {
-                    $this->ID = $userInfo['id'];
-                    $this->firstName = $userInfo['first_name'];
-                    $this->lastName = $userInfo['last_name'];
-                    $result = true;
-                }
+                throw new AuthorizedException('Не найден ID пользователя');
             }
 
-        }
+            $this->ID = $userInfo['id'];
+            $this->firstName = $userInfo['first_name'];
+            $this->lastName = $userInfo['last_name'];
 
-        return $result;
+            return true;
+
+        } catch (AuthorizedException $ex) {
+            Log::writeLog($ex->getMessage());
+            return false;
+        }
     }
-    private function getToken()
+
+    protected function getToken($code)
     {
         $params = array(
             'client_id'     => ID_VK,
             'redirect_uri'  => URL_VK,
             'client_secret' => SECRET_VK,
-            'code'          => $_GET['code']
+            'code'          => $code
         );
-        $token = json_decode(file_get_contents(URL_TOKEN_VK . '?' . urldecode(http_build_query($params))), true);
 
-        return $token;
+        return json_decode(file_get_contents(URL_TOKEN_VK . '?' . urldecode(http_build_query($params))), true);
     }
 
-    private function getUserInformation($token)
+    protected function getUserInformation($token)
     {
         $params = array(
             'uids'         => $token['uids'],
