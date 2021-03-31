@@ -21,9 +21,9 @@ class ApplicationHelper {
 
     private function getConfig(): array {
         return [
-            "\\classes\\commands\\MainCommands",
-            "\\classes\\commands\\StartCommands",
-            "\\classes\\commands\\TehnCommands"
+            "/main" => "\\classes\\commands\\MainCommands",
+            "/start" => "\\classes\\commands\\StartCommands",
+            "/tehn" => "\\classes\\commands\\TehnCommands"
         ];
     }
 }

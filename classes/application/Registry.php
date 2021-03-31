@@ -2,13 +2,18 @@
 
 namespace classes\application;
 
+use Exception;
+
 class Registry {
 
     private static $registry;
     private $commands;
+    private $request;
+    private $applicationHelper;
 
     private function __construct() {
         $this->commands = [];
+        $this->request = null;
     }
 
     public static function getInstance(): self {
@@ -29,5 +34,23 @@ class Registry {
         }
 
         return $this->commands[$key];
+    }
+
+    public function setRequest(Request $request) {
+        $this->request = $request;
+    }
+
+    public function getRequest(): Request {
+        if (is_null($this->request)) {
+            throw new Exception('Объект типа Request не задан');
+        }
+    }
+
+    public function getApplicationHelper(): ApplicationHelper {
+        if (is_null($this->applicationHelper)) {
+            $this->applicationHelper = new ApplicationHelper();
+        }
+
+        return $this->applicationHelper;
     }
 }
