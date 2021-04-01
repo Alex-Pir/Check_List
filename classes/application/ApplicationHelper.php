@@ -2,6 +2,13 @@
 
 namespace classes\application;
 
+/**
+ * Класс, производящий первоначальные настройки приложения,
+ * относящиеся к роутингу
+ *
+ * Class ApplicationHelper
+ * @package classes\application
+ */
 class ApplicationHelper {
 
     private $reg;
@@ -16,14 +23,18 @@ class ApplicationHelper {
     }
 
     private function setupOptions() {
-        $this->reg->setCommand($this->getConfig());
+        $arConfig = $this->getConfig();
+
+        foreach ($arConfig as $key => $config) {
+            $this->reg->setCommand($key, $config);
+        }
     }
 
     private function getConfig(): array {
         return [
             "/main" => "\\classes\\commands\\MainCommands",
             "/start" => "\\classes\\commands\\StartCommands",
-            "/tehn" => "\\classes\\commands\\TehnCommands"
+            "/tehnic" => "\\classes\\commands\\TehnCommands"
         ];
     }
 }

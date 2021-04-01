@@ -8,6 +8,6 @@ class DefaultComands extends Command {
     public function doExecute(Request $request)
     {
         $request->addFeedback('Пожалуйста, авторизуйтесь');
-        include '/index.php';
+        include $_SERVER['DOCUMENT_ROOT'] . '/main_application.php';
     }
 }

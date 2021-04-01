@@ -34,7 +34,7 @@ class CommandResolver {
 
             $refClass = new ReflectionClass($class);
 
-            if ($refClass->isSubclassOf(self::$refCmd)) {
+            if (!$refClass->isSubclassOf(self::$refCmd)) {
                 $request->addFeedback("Команда $refClass не относится к классу Command");
                 return new self::$defaultCmd;
             }

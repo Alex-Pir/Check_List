@@ -8,7 +8,7 @@ abstract class Request {
     protected $feedback;
     protected $path;
 
-    public function __constructor() {
+    public function __construct() {
         $this->feedback = [];
         $this->path = '/';
 
