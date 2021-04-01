@@ -1,13 +1,6 @@
 <?php
-include_once __DIR__ . '/vendor/autoload.php';
-include 'lang/start.php';
-
 use classes\user\SessionHelper;
 
-session_start();
-
-?>
-<?
 $user = SessionHelper::getDataFromSession();
 if (!$user) {
     classes\auth\Authorization::redirect("/");

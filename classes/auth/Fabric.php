@@ -3,6 +3,12 @@ namespace classes\auth;
 
 class Fabric
 {
+    /** @var string Параметр, который возвращает приложение VK */
+    const VK_PROVIDER = 'vk';
+
+    /** @var string Параметр, который возвращает приложение Mail */
+    const MAIL_PROVIDER = 'mail';
+
     /** По переданному параметру соц. сети создает соответствующий класс для последующей авторизации
      * @param $provider
      * @return Mail|VK|null - экземпляр класса Authorization или null
@@ -11,10 +17,10 @@ class Fabric
     {
         switch ($provider)
         {
-            case 'vk':
+            case self::VK_PROVIDER:
                 $result = new VK();
                 break;
-            case 'mail':
+            case self::MAIL_PROVIDER:
                 $result = new Mail();
                 break;
             default:
