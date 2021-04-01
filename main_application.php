@@ -5,8 +5,8 @@ include 'config/VK/config.php';
 
 use classes\user\SessionHelper;
 
-if (isset($_GET['provider'])) {
-    if (!SessionHelper::saveDataToSession($_GET['provider'])) {
+if (!empty($provider)) {
+    if (!SessionHelper::saveDataToSession($provider)) {
         classes\auth\Authorization::redirect("/");
     }
 }
