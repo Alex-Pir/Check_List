@@ -14,6 +14,7 @@ class DefaultComands extends Command {
 
     public function doExecute(Request $request)
     {
+        $request->clearFeedback();
         $request->addFeedback('Пожалуйста, авторизуйтесь');
         $request = Registry::getInstance()->getRequest();
         $provider = $request->getProperty(self::PROPERTY_URL_PROVIDER);
