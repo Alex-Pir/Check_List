@@ -3,8 +3,8 @@ $(document).ready(function() {
         var name= $(this).attr('name');
         $.ajax({
             type: "POST",
-            url: "handler/checkboxhandler.php",
-            data: {startCheck: $('form').serialize()},
+            url: "/handler/",
+            data: {START_CHECK: $('form').serialize()},
             error: function()
             {
                 alert('Ошибка при сохранении!');

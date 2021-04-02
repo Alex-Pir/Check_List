@@ -25,7 +25,7 @@ class SessionHelper
     const USER_SESSION_KEY = 'user';
 
     /**
-     * Сохранение данных о пользоавтеле в сессию
+     * Сохранение данных о пользоавтеле в сессию при авторизации
      *
      * @param string $provider
      * @return bool
@@ -57,13 +57,22 @@ class SessionHelper
     }
 
     /**
+     * Сохранение данных о пользователе в сессию
+     *
+     * @param \classes\user\User $user
+     */
+    public static function saveUserToSession(User $user) {
+        $_SESSION[self::USER_SESSION_KEY] = $user;
+    }
+
+    /**
      * Получение данных пользователя из сессии
      *
      * @return \classes\user\User|null
      */
     public static function getDataFromSession(): ?User
     {
-        $user = $_SESSION["user"];
+        $user = $_SESSION[self::USER_SESSION_KEY];
 
         try {
             if (!($user instanceof User)) {
@@ -75,5 +84,12 @@ class SessionHelper
         }
 
         return $user;
+    }
+
+    /**
+     * Удаление данных о пользователе из сессии
+     */
+    public static function destroyUserInSession() {
+        unset($_SESSION[self::USER_SESSION_KEY]);
     }
 }

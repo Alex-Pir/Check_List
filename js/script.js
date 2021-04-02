@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     $(".exit-link").click(function () {
         $.ajax({
-            url: 'handler/logouthandler.php',
+            url: '/logout/',
             type: 'POST',
             data: { action: 'logout' },
             success: function(){
