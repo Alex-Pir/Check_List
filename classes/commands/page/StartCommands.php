@@ -1,14 +1,15 @@
 <?php
 
-namespace classes\commands;
+namespace classes\commands\page;
 
+use classes\commands\Command;
 use classes\application\Request;
 
-class MainCommands extends Command {
+class StartCommands extends Command {
     public function doExecute(Request $request)
     {
-        $langFile = $_SERVER['DOCUMENT_ROOT'] . '/lang/main.php';
-        $pageFile = $_SERVER['DOCUMENT_ROOT'] . '/main.php';
+        $langFile = $_SERVER['DOCUMENT_ROOT'] . '/lang/start.php';
+        $pageFile = $_SERVER['DOCUMENT_ROOT'] . '/start.php';
 
         if (file_exists($langFile)) {
             include $langFile;

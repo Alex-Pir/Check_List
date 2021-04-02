@@ -4,6 +4,7 @@ namespace classes\commands;
 
 use classes\application\Registry;
 use classes\application\Request;
+use classes\commands\page\DefaultComands;
 use ReflectionClass;
 use ReflectionException;
 

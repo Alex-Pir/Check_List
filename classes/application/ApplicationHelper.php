@@ -17,11 +17,17 @@ class ApplicationHelper {
         $this->reg = Registry::getInstance();
     }
 
+    /**
+     * Выполнение необходимых настроек приложения
+     */
     public function init() {
         $this->setupOptions();
         $this->reg->setRequest(new HttpRequest());
     }
 
+    /**
+     * Настройки роутинга
+     */
     private function setupOptions() {
         $arConfig = $this->getConfig();
 
@@ -30,11 +36,18 @@ class ApplicationHelper {
         }
     }
 
+    /**
+     * Получение массива путей
+     *
+     * @return string[]
+     */
     private function getConfig(): array {
         return [
-            "/main" => "\\classes\\commands\\MainCommands",
-            "/start" => "\\classes\\commands\\StartCommands",
-            "/tehnic" => "\\classes\\commands\\TehnCommands"
+            "/main" => "\\classes\\commands\\page\\MainCommands",
+            "/start" => "\\classes\\commands\\page\\StartCommands",
+            "/tehnic" => "\\classes\\commands\\page\\TehnCommands",
+            "/handler/" => "\\classes\\commands\\handlers\\HandlerCommands",
+            "/logout/" => "\\classes\\commands\\handlers\\LogoutCommands"
         ];
     }
 }

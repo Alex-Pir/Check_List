@@ -1,7 +1,8 @@
 <?php
 
-namespace classes\commands;
+namespace classes\commands\page;
 
+use classes\commands\Command;
 use classes\application\Request;
 
 class TehnCommands extends Command {

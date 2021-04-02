@@ -3,10 +3,12 @@
 namespace classes\user;
 
 use classes\exceptions\user as userException;
+
 class User
 {
-    private $TEHN_COLUMN = 'TEHN_CHECK';
-    private $START_COLUMN = 'START_CHECK';
+    const TEHN_COLUMN = 'TEHN_CHECK';
+    const START_COLUMN = 'START_CHECK';
+
     private $id;
     private $firstName;
     private $lastName;
@@ -93,8 +95,8 @@ class User
             return false;
         }
 
-        $this->tehnCh = unserialize($response[$this->TEHN_COLUMN]);
-        $this->startCh = unserialize($response[$this->START_COLUMN]);
+        $this->tehnCh = unserialize($response[self::TEHN_COLUMN]);
+        $this->startCh = unserialize($response[self::START_COLUMN]);
 
 
         return true;
