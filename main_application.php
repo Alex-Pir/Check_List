@@ -1,13 +1,10 @@
 <?php
 
+/** @var $request classes\application\Request */
+
 include 'config/mail/config.php';
 include 'config/VK/config.php';
 
-use classes\user\SessionHelper;
-
-if (SessionHelper::getDataFromSession()) {
-    classes\auth\Authorization::redirect("/main");
-}
 ?>
 
 <!DOCTYPE html>

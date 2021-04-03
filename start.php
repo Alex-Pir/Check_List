@@ -1,17 +1,12 @@
 <?php
-use classes\user\SessionHelper;
-
-$user = SessionHelper::getDataFromSession();
-if (!$user) {
-    classes\auth\Authorization::redirect("/");
-}
+/** @var $MESS array Массив с языковыми фразами */
+/** @var $user  classes\user\User данные о пользователе */
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/style.css">
-    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script src="js/jquery-3.0.0.min.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/start-script.js"></script>
@@ -20,11 +15,7 @@ if (!$user) {
 <body>
 <div class="info-link">
     <div class="user-info">
-        <?
-        if ($user instanceof classes\user\User) {
-            echo implode(' ', [$user->getFirstName(), $user->getLastName()]);
-        }
-        ?>
+        <?= implode(' ', [$user->getFirstName(), $user->getLastName()]);?>
     </div>
     <div class="link">
         <a href="main">Главная</a>

@@ -2,6 +2,7 @@
 
 namespace classes\commands\handlers;
 
+use classes\auth\Authorization;
 use classes\commands\Command;
 use classes\application\Request;
 use classes\log\Log;
@@ -47,6 +48,7 @@ class HandlerCommands extends Command
             }
         } catch (Exception $ex) {
             Log::writeLog($ex->getMessage());
+            Authorization::redirect('/');
         }
 
     }

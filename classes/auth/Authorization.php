@@ -39,9 +39,8 @@ abstract class Authorization
      */
     public static function redirect($url)
     {
-        @header("HTTP/1.1 301 Moved Permanently");
-        @header("Location:" . $url);
-        exit();
+        @header("Location:{$url}");
+        exit;
     }
 
     /**
