@@ -27,7 +27,7 @@ class Mail extends Authorization
         try {
             $userInfo = $this->getUserInfo($_GET['code']);
 
-            if (isset($userInfo['uid'])) {
+            if (!isset($userInfo['uid'])) {
                 throw new AuthorizedException('Не найден ID пользователя');
             }
 
