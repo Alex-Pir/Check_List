@@ -108,8 +108,9 @@ class DBConnection
 
             $stmt = $dbConnect->prepare("SELECT COUNT(*) FROM CHECKOUT WHERE USER_ID = :userID");
             $stmt->execute(['userID' => $id]);
+            $arResult = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($stmt->fetch(PDO::FETCH_ASSOC))
+            if (!empty($arResult) && array_pop($arResult) > 0)
             {
                 return true;
             }
