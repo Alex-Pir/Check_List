@@ -1,12 +1,6 @@
 <?php
-
-use classes\user\SessionHelper;
-?>
-<?
-$user = SessionHelper::getDataFromSession();
-if (!$user) {
-    classes\auth\Authorization::redirect("/");
-}
+/** @var $MESS array Массив с языковыми фразами */
+/** @var $user  classes\user\User данные о пользователе */
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,11 +15,7 @@ if (!$user) {
 <body>
 <div class="info-link">
     <div class="user-info">
-        <?
-        if ($user instanceof classes\user\User) {
-            echo implode(' ', [$user->getFirstName(), $user->getLastName()]);
-        }
-        ?>
+        <?= implode(' ', [$user->getFirstName(), $user->getLastName()]);?>
     </div>
     <div class="link">
         <a href="main">Главная</a>

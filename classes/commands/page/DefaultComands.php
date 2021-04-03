@@ -2,6 +2,7 @@
 
 namespace classes\commands\page;
 
+use classes\auth\Authorization;
 use classes\commands\Command;
 use classes\application\Request;
 use classes\application\Registry;
@@ -20,9 +21,10 @@ class DefaultComands extends Command {
         $provider = $request->getProperty(self::PROPERTY_URL_PROVIDER);
 
         if ($provider) {
-            SessionHelper::saveDataToSession($provider);
+            if (SessionHelper::saveDataToSession($provider)) {
+                Authorization::redirect("/main");
+            }
         }
-
 
         include $_SERVER['DOCUMENT_ROOT'] . '/main_application.php';
     }
