@@ -18,8 +18,8 @@ class MainCommands extends Command {
             Authorization::redirect("/");
         }
 
-        $langFile = $_SERVER['DOCUMENT_ROOT'] . '/lang/main.php';
-        $pageFile = $_SERVER['DOCUMENT_ROOT'] . '/main.php';
+        $langFile = $_SERVER["DOCUMENT_ROOT"] . "/lang/main.php";
+        $pageFile = $_SERVER["DOCUMENT_ROOT"] . "/templates/main.php";
 
         if (file_exists($langFile)) {
             include $langFile;

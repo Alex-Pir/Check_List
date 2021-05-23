@@ -6,10 +6,10 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-    <script src="js/jquery-3.0.0.min.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
+    <script src="/js/jquery-3.0.0.min.js"></script>
+    <script type="text/javascript" src="/js/script.js"></script>
     <title><?= $MESS["MAIN_TITLE"]; ?></title>
 </head>
 <body>
@@ -18,7 +18,7 @@
         <?= implode(' ', [$user->getFirstName(), $user->getLastName()]);?>
     </div>
     <div class="link">
-        <a href="main">Главная</a>
+        <a href="../index.php">Главная</a>
         <span>|</span>
         <p class="exit-link">Выход</p>
     </div>

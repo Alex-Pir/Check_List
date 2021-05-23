@@ -4,14 +4,15 @@ namespace classes\commands;
 
 use classes\application\Registry;
 use classes\application\Request;
-use classes\commands\page\DefaultComands;
+use classes\commands\page\DefaultCommands;
+use Exception;
 use ReflectionClass;
 use ReflectionException;
 
 class CommandResolver {
 
     private static $refCmd = null;
-    private static $defaultCmd = DefaultComands::class;
+    private static $defaultCmd = DefaultCommands::class;
 
     public function __construct() {
         self::$refCmd = new ReflectionClass(Command::class);
@@ -24,25 +25,25 @@ class CommandResolver {
             $class = $reg->getCommand($path);
 
             if (is_null($class)) {
-                $request->addFeedback("Запрашиваемый путь $path не найден");
-                return new self::$defaultCmd;
+                throw new Exception("Запрашиваемый путь $path не найден");
             }
 
             if (!class_exists($class)) {
-                $request->addFeedback("Класс $class не найден");
-                return new self::$defaultCmd;
+                throw new Exception("Класс $class не найден");
             }
 
             $refClass = new ReflectionClass($class);
 
             if (!$refClass->isSubclassOf(self::$refCmd)) {
-                $request->addFeedback("Команда $refClass не относится к классу Command");
-                return new self::$defaultCmd;
+                throw new Exception("Команда $refClass не относится к классу Command");
             }
 
             return $refClass->newInstance();
         } catch(ReflectionException $ex) {
             $request->addFeedback("Не перейти на запрашиваемую страницу");
+            return new self::$defaultCmd;
+        } catch(Exception $ex) {
+            $request->addFeedback($ex->getMessage());
             return new self::$defaultCmd;
         }
     }
