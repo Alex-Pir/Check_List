@@ -2,13 +2,17 @@
 
 namespace classes\commands\page;
 
+use classes\application\LangHelper;
 use classes\auth\Authorization;
 use classes\commands\Command;
 use classes\application\Request;
 use classes\user\SessionHelper;
 use classes\user\User;
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 
-class MainCommands extends Command {
+class MainCommands extends Command
+{
     public function doExecute(Request $request)
     {
 
@@ -18,15 +22,12 @@ class MainCommands extends Command {
             Authorization::redirect("/");
         }
 
-        $langFile = $_SERVER["DOCUMENT_ROOT"] . "/lang/main.php";
-        $pageFile = $_SERVER["DOCUMENT_ROOT"] . "/templates/main.php";
+        LangHelper::loadMessages($_SERVER["DOCUMENT_ROOT"] . "/lang/main.php");
 
-        if (file_exists($langFile)) {
-            include $langFile;
-        }
-
-        if (file_exists($pageFile)) {
-            include $pageFile;
-        }
+        echo $this->twig->render('main.html.twig', array(
+            'title' => LangHelper::getMessage("MAIN_TITLE"),
+            'name' => implode(' ', [$user->getFirstName(), $user->getLastName()]),
+            'checkLists' => LangHelper::getMessage("CHECK_PAGE")
+        ));
     }
 }
