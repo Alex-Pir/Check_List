@@ -3,7 +3,13 @@ namespace classes\application\configuration;
 
 class CommandsConf {
 
+    /** @var array массив с командами */
     private $commands;
+
+    /** @var array массив со сложными командами
+     * Примеры сложных команд находятся в /config/route/route.ini
+     * под ключом [complex_commands] и нужны для построения динамических путей к страницам чеклистов
+     */
     private $complexCommands;
 
     public function __construct(array $commands, array $complexCommands) {
@@ -11,6 +17,13 @@ class CommandsConf {
         $this->complexCommands = $this->parseComplexCommands($complexCommands);
     }
 
+    /**
+     * Разбирает массив со сложными командами и преобразует его к виду
+     * ["CLASS" => ..., "PARAMETERS" => []]
+     *
+     * @param array $complexCommands
+     * @return array
+     */
     private function parseComplexCommands(array $complexCommands): array {
 
         $arComplexCommands = [];

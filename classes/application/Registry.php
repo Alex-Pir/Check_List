@@ -13,12 +13,13 @@ use Exception;
  */
 class Registry {
 
-    /** @var Экземпляр класса */
+    /** @var self Экземпляр класса */
     private static $registry;
 
     /** @var array Команды */
     private $commands;
 
+    /** @var array Сложные команды */
     private $complexCommands;
 
     /** @var null Запросы */
@@ -108,6 +109,9 @@ class Registry {
 
             $paramIndex = 0;
 
+            /**
+             * сопоставляем сзапрос с шаблоном и сохраняем параметры в запросе
+             */
             foreach ($arCommandKeys as $k => $cKeys) {
                 if ($cKeys !== '?') {
                     continue;
