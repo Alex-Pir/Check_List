@@ -2,7 +2,6 @@
 
 namespace classes\commands\page;
 
-use classes\application\Registry;
 use classes\auth\Authorization;
 use classes\commands\Command;
 use classes\application\Request;

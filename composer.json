@@ -9,6 +9,9 @@
       "email": "email@example.com"
     }
   ],
+  "require": {
+    "twig/twig": "^1.6.5"
+  },
   "autoload": {
     "psr-4": {
       "classes\\": "classes/"
