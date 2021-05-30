@@ -1,0 +1,38 @@
+{% extends "header.html.twig" %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+{% block content %}
+    <div class="info-link">
+        <div class="user-info">
+            {{ name }}
+        </div>
+        <div class="link">
+            <a href="/index.php">Главная</a>
+            <span>|</span>
+            <p class="exit-link">Выход</p>
+        </div>
+    </div>
+    <div class="title-page">
+        <h1>
+            {{ title }}
+        </h1>
+    </div>
+
+    <div class="wrap">
+        <div class="content">
+            <ul class="check-list">
+                {% for check in checkLists %}
+                    <li class="check-one">
+                        <div class="check-top">
+                            <span><a href={{ check.link }}>{{ check.text }}</a></span>
+                        </div>
+                        <div class="check-bottom">
+                            <p>{{ check.info }}</p>
+                        </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

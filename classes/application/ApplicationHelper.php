@@ -2,6 +2,9 @@
 
 namespace classes\application;
 
+use classes\application\configuration\CommandsConf;
+use classes\exceptions\application\AppException;
+
 /**
  * Класс, производящий первоначальные настройки приложения,
  * относящиеся к роутингу
@@ -11,9 +14,18 @@ namespace classes\application;
  */
 class ApplicationHelper {
 
+    private $config;
     private $reg;
 
     public function __construct() {
+
+        $this->config = $_SERVER["DOCUMENT_ROOT"] . "/config/route/route.ini";
+
+        if (!file_exists($this->config)) {
+            throw new AppException("Файл конфигурации не найден!");
+        }
+
+
         $this->reg = Registry::getInstance();
     }
 
@@ -29,25 +41,8 @@ class ApplicationHelper {
      * Настройки роутинга
      */
     private function setupOptions() {
-        $arConfig = $this->getConfig();
-
-        foreach ($arConfig as $key => $config) {
-            $this->reg->setCommand($key, $config);
-        }
-    }
-
-    /**
-     * Получение массива путей
-     *
-     * @return string[]
-     */
-    private function getConfig(): array {
-        return [
-            "/main" => "\\classes\\commands\\page\\MainCommands",
-            "/start" => "\\classes\\commands\\page\\StartCommands",
-            "/tehnic" => "\\classes\\commands\\page\\TehnCommands",
-            "/handler/" => "\\classes\\commands\\handlers\\HandlerCommands",
-            "/logout/" => "\\classes\\commands\\handlers\\LogoutCommands"
-        ];
+        $options = parse_ini_file($this->config, true);
+        $conf = new CommandsConf($options["commands"] ?? [], $options["complex_commands"] ?? []);
+        $this->reg->setCommand($conf);
     }
 }

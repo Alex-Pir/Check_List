@@ -7,4 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'classes\\' => array($baseDir . '/classes'),
+    'Twig\\' => array($vendorDir . '/twig/twig/src'),
+    'Symfony\\Polyfill\\Ctype\\' => array($vendorDir . '/symfony/polyfill-ctype'),
 );

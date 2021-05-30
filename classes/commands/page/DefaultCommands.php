@@ -7,17 +7,25 @@ use classes\commands\Command;
 use classes\application\Request;
 use classes\application\Registry;
 use classes\user\SessionHelper;
+use classes\user\User;
 
-class DefaultComands extends Command {
+class DefaultCommands extends Command {
 
     /** @var string Параметр для определения класса авторизации */
-    const PROPERTY_URL_PROVIDER = 'provider';
+    const PROPERTY_URL_PROVIDER = "provider";
 
     public function doExecute(Request $request)
     {
         $request->clearFeedback();
-        $request->addFeedback('Пожалуйста, авторизуйтесь');
+        $request->addFeedback("Пожалуйста, авторизуйтесь");
         $request = Registry::getInstance()->getRequest();
+
+        $user = SessionHelper::getDataFromSession();
+
+        if ($user instanceof User) {
+            Authorization::redirect("/main");
+        }
+
         $provider = $request->getProperty(self::PROPERTY_URL_PROVIDER);
 
         if ($provider) {
@@ -26,6 +34,6 @@ class DefaultComands extends Command {
             }
         }
 
-        include $_SERVER['DOCUMENT_ROOT'] . '/main_application.php';
+        include $_SERVER["DOCUMENT_ROOT"] . "/templates/main_application.php";
     }
 }

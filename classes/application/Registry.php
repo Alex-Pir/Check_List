@@ -2,6 +2,7 @@
 
 namespace classes\application;
 
+use classes\application\configuration\CommandsConf;
 use Exception;
 
 /**
@@ -12,16 +13,19 @@ use Exception;
  */
 class Registry {
 
-    /** @var Экземпляр класса */
+    /** @var self Экземпляр класса */
     private static $registry;
 
     /** @var array Команды */
     private $commands;
 
+    /** @var array Сложные команды */
+    private $complexCommands;
+
     /** @var null Запросы */
     private $request;
 
-    /** @var Экземпляр класса ApplicationHelper */
+    /** @var ApplicationHelper Экземпляр класса ApplicationHelper */
     private $applicationHelper;
 
     private function __construct() {
@@ -43,13 +47,13 @@ class Registry {
     }
 
     /**
-     * Запись команды в хранилище
+     * Запись команд в хранилище
      *
-     * @param $key
-     * @param $command
+     * @param CommandsConf $commandsConf
      */
-    public function setCommand($key, $command) {
-        $this->commands[$key] = $command;
+    public function setCommand(CommandsConf $commandsConf) {
+        $this->commands = $commandsConf->getCommands();
+        $this->complexCommands = $commandsConf->getComplexCommands();
     }
 
     /**
@@ -57,13 +61,70 @@ class Registry {
      *
      * @param $key
      * @return false|mixed
+     * @throws Exception
      */
     public function getCommand($key) {
-        if (!array_key_exists($key, $this->commands)) {
-            return false;
+        if (array_key_exists($key, $this->commands)) {
+            return  $this->commands[$key];
         }
 
-        return $this->commands[$key];
+        return $this->getComplexCommand($key);
+    }
+
+    /**
+     * Получение класса команды из сложного пути
+     *
+     * @param $key
+     * @return false|mixed
+     * @throws Exception
+     */
+    private function getComplexCommand($key) {
+
+        $arDefaultKeys = explode('/', $key);
+
+        $complexFlag = true;
+
+        foreach ($this->complexCommands as $commandKey => $command) {
+
+            if (!array_key_exists("PARAMETERS", $command) || !array_key_exists("CLASS", $command)) {
+                continue;
+            }
+
+            $arCommandKeys = explode('/', $commandKey);
+
+            $arDif = array_diff($arCommandKeys, $arDefaultKeys);
+
+            /**
+             * проверяем, подходит ли нам путь. Если все сходится, кроме ? для параметров, то подходит
+             */
+            foreach ($arDif as $dif) {
+                if ($dif !== '?') {
+                    $complexFlag = false;
+                }
+            }
+
+            if (!$complexFlag) {
+                continue;
+            }
+
+            $paramIndex = 0;
+
+            /**
+             * сопоставляем сзапрос с шаблоном и сохраняем параметры в запросе
+             */
+            foreach ($arCommandKeys as $k => $cKeys) {
+                if ($cKeys !== '?') {
+                    continue;
+                }
+
+                $param = $this->complexCommands[$commandKey]["PARAMETERS"][$paramIndex++];
+                $this->getRequest()->setProperty($param, $arDefaultKeys[$k]);
+            }
+
+            return $this->complexCommands[$commandKey]["CLASS"];
+        }
+
+        return false;
     }
 
     /**
