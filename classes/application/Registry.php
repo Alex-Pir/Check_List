@@ -3,7 +3,9 @@
 namespace classes\application;
 
 use classes\application\configuration\CommandsConf;
+use classes\log\Log;
 use Exception;
+use PDO;
 
 /**
  * Класс для хранения данных, используемых во всем приложении
@@ -27,6 +29,9 @@ class Registry {
 
     /** @var ApplicationHelper Экземпляр класса ApplicationHelper */
     private $applicationHelper;
+
+    /** @var PDO Экземпляр класса PDOStatement*/
+    private $pdo;
 
     private function __construct() {
         $this->commands = [];
@@ -161,5 +166,50 @@ class Registry {
         }
 
         return $this->applicationHelper;
+    }
+
+    /**
+     * Получение соединения с базой данных
+     *
+     * @return PDO|null
+     */
+    public function getPdo(): ?PDO {
+        try {
+            if (!is_null($this->pdo)) {
+                $dbConfigFile = $_SERVER["DOCUMENT_ROOT"] . "/config/db/db.ini";
+
+                if (!file_exists($dbConfigFile)) {
+                    throw new Exception("Отсутствует файл с настройками подключения к базе данных");
+                }
+
+                $options = parse_ini_file($dbConfigFile);
+
+                if (!isset($options["database"]) || !is_array($options["database"])) {
+                    throw new Exception("В файле отсутствуют настройки для подключения к базе данных");
+                }
+
+                $this->pdo = new PDO("mysql:host={$this->getValueFromArray($options["database"], 'HOST')};dbname={$this->getValueFromArray($options["database"], 'DB')}", $this->getValueFromArray($options["database"], 'USER'), $this->getValueFromArray($options["database"], 'PASS'), [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            }
+
+            return $this->pdo;
+        } catch(Exception $ex) {
+            Log::writeLog($ex->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Получение значения из массива по ключу
+     *
+     * @param array $array
+     * @param string $key
+     * @return mixed|null
+     */
+    protected function getValueFromArray(array $array, string $key) {
+        if (isset($array[$key])) {
+            return $array[$key];
+        }
+
+        return null;
     }
 }
