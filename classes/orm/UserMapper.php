@@ -23,7 +23,7 @@ class UserMapper extends Mapper {
     public function update(DomainObject $object) {
 
         if (!($object instanceof User)) {
-            throw new Exception('Передан неверный объект для данной таблицы');
+            throw new Exception("Передан неверный объект для данной таблицы");
         }
 
         $values = [
@@ -32,7 +32,7 @@ class UserMapper extends Mapper {
             $object->getId()
         ];
 
-        $this->updateStmt->execute();
+        $this->updateStmt->execute($values);
     }
 
     protected function doCreateObject(array $raw): DomainObject {
@@ -42,8 +42,10 @@ class UserMapper extends Mapper {
 
     protected function doInsert(DomainObject $object) {
 
-        if (!($object instanceof User)) {
-            throw new Exception('Передан неверный объект для данной таблицы');
+        $class = $this->targetClass();
+        
+        if (!($object instanceof $class)) {
+            throw new Exception("Передан неверный объект для данной таблицы. Нужен объект типа {$class}");
         }
 
         $values = [
