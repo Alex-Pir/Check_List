@@ -2,6 +2,7 @@
 
 namespace classes\user;
 
+use classes\orm\UserMapper;
 use Exception;
 use classes\log\Log;
 use classes\auth\Fabric;
@@ -43,6 +44,8 @@ class SessionHelper
             if (!$userAut->isAuthorized()) {
                 throw new UserAddException('Не удается авторизовать пользователя!');
             }
+            $userMapper = new UserMapper();
+            $user = $userMapper->find($userAut->getId());
 
             $user = new User($userAut->getId(), $userAut->getFirstName(), $userAut->getLastName());
             $_SESSION[self::USER_SESSION_KEY] = $user;

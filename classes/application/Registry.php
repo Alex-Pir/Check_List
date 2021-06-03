@@ -175,14 +175,14 @@ class Registry {
      */
     public function getPdo(): ?PDO {
         try {
-            if (!is_null($this->pdo)) {
+            if (is_null($this->pdo)) {
                 $dbConfigFile = $_SERVER["DOCUMENT_ROOT"] . "/config/db/db.ini";
 
                 if (!file_exists($dbConfigFile)) {
                     throw new Exception("Отсутствует файл с настройками подключения к базе данных");
                 }
 
-                $options = parse_ini_file($dbConfigFile);
+                $options = parse_ini_file($dbConfigFile, true);
 
                 if (!isset($options["database"]) || !is_array($options["database"])) {
                     throw new Exception("В файле отсутствуют настройки для подключения к базе данных");

@@ -9,25 +9,25 @@ class User extends DomainObject {
     private $tehnCheck;
 
     public function __construct(int $id, string $name) {
-        $this->startCheck = self::getCollection(Start::class);
-        $this->tehnCheck = self::getCollection(Tehn::class);
+        $this->startCheck = [];
+        $this->tehnCheck = [];
         $this->name = $name;
         parent::__construct($id);
     }
 
-    public function setStartCheck(StartCollection $start) {
+    public function setStartCheck(array $start) {
         $this->startCheck = $start;
     }
 
-    public function setTehnCheck(TehnCollection $tehn) {
+    public function setTehnCheck(array $tehn) {
         $this->startCheck = $tehn;
     }
 
-    public function getStartCheck(): StartCollection {
+    public function getStartCheck(): array {
         return $this->startCheck;
     }
 
-    public function getTehnCheck(): TehnCollection {
+    public function getTehnCheck(): array {
         return $this->tehnCheck;
     }
 
