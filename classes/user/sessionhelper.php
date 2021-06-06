@@ -47,6 +47,11 @@ class SessionHelper
             $userMapper = new UserMapper();
             $user = $userMapper->find($userAut->getId());
 
+            if (!$user->getId()) {
+                $user = new \classes\objects\User($userAut->getId(), implode(' ', [$userAut->getFirstName(), $userAut->getLastName()]));
+                $userMapper->insert($user);
+            }
+
             $user = new User($userAut->getId(), $userAut->getFirstName(), $userAut->getLastName());
             $_SESSION[self::USER_SESSION_KEY] = $user;
             return true;
