@@ -1,6 +1,8 @@
 <?php
 namespace classes\objects;
 
+use classes\objects\collections\Collection;
+
 abstract class DomainObject {
 
     private $id;

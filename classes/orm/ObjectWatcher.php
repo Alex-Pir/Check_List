@@ -19,12 +19,12 @@ class ObjectWatcher {
     }
 
     public function globalKey(DomainObject $object): string {
-        return get_class($object . "." . $object->getId());
+        return get_class($object) . "." . $object->getId();
     }
 
     public static function add(DomainObject $object) {
         $inst = self::instance();
-        $inst->all[$inst->globalKey()] = $object;
+        $inst->all[$inst->globalKey($object)] = $object;
     }
 
     public static function exists($classname, $id) {
