@@ -1,6 +1,9 @@
 <?php
 namespace classes\objects;
 
+use classes\orm\Mapper;
+use classes\orm\UserMapper;
+
 class User extends DomainObject {
 
     private $name;
@@ -17,10 +20,12 @@ class User extends DomainObject {
 
     public function setStartCheck(array $start) {
         $this->startCheck = $start;
+        $this->markDirty();
     }
 
     public function setTehnCheck(array $tehn) {
         $this->startCheck = $tehn;
+        $this->markDirty();
     }
 
     public function getStartCheck(): array {
@@ -38,5 +43,10 @@ class User extends DomainObject {
 
     public function getName(): string {
         return $this->name;
+    }
+
+    public function getFinder(): Mapper
+    {
+       return new UserMapper();
     }
 }

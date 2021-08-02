@@ -4,6 +4,7 @@ namespace classes\controllers;
 
 use classes\application\Registry;
 use classes\commands\CommandResolver;
+use classes\orm\ObjectWatcher;
 
 class Controller {
     private $reg;
@@ -19,6 +20,8 @@ class Controller {
         $instance = new Controller();
         $instance->init();
         $instance->handleRequest();
+
+        ObjectWatcher::instance()->performOperations();
     }
 
     /**
